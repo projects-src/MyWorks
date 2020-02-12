@@ -34,7 +34,7 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "laravel/composer.json" }}
+            - v1-dependencies-{{ checksum "bbs-app/composer.json" }}
             - v1-dependencies-
   composer-install:
     steps:
@@ -47,7 +47,7 @@ commands:
       - save_cache:
           paths:
             - ./vendor
-          key: v1-dependencies-{{ checksum "laravel/composer.json" }}
+          key: v1-dependencies-{{ checksum "bbs-app/composer.json" }}
   wait-for-mysql:
     steps:
       - run:
