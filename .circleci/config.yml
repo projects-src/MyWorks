@@ -15,6 +15,7 @@ jobs:
           keys:
             - composer-v1-{{ checksum "bbs-app/composer.json" }}
             - composer-v1-
+      - run: ls
       - run: composer install -n --prefer-dist --working-dir=/bbs-app
       - save_cache:
           key: composer-v1-{{ checksum "bbs-app/composer.json" }}
