@@ -41,7 +41,7 @@ commands:
       - run:
           name: composer install
           working_directory: laravel
-          command: composer install -n --prefer-dist --working-dir=~/bbs-app
+          command: composer install -n --prefer-dist --working-dir=bbs-app
   save-cache-composer:
     steps:
       - save_cache:
