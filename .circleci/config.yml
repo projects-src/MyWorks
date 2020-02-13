@@ -15,15 +15,15 @@ jobs:
           keys:
             - composer-v1-{{ checksum "bbs-app/composer.json" }}
             - composer-v1-
-      - run: ls
-      - run: composer install -n --prefer-dist --working-dir=/bbs-app
+      - run: pwd
+      - run: composer install -n --prefer-dist --working-dir=bbs-app
       - save_cache:
           key: composer-v1-{{ checksum "bbs-app/composer.json" }}
           paths:
             - vendor
       - run: php artisan migrate
       - run: php artisan db:seed
-      - run: php ./vendor/bin/phpunit
+      - run: php vendor/bin/phpunit
 
       - restore_cache:
           keys:
