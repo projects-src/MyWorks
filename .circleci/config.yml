@@ -1,7 +1,7 @@
 version: 2.1
 executors:
   default:
-    working_directory: ~/repo
+    working_directory: ~/bbs-app
     docker:
       - image: circleci/php:7.3-stretch-node-browsers
     environment:
@@ -34,20 +34,20 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "bbs-app/composer.json" }}
+            - v1-dependencies-{{ checksum "./bbs-app/composer.json" }}
             - v1-dependencies-
   composer-install:
     steps:
       - run:
           name: composer install
           working_directory: laravel
-          command: composer install -n --prefer-dist
+          command: composer install -n --prefer-dist --working-dir=./bbs-app
   save-cache-composer:
     steps:
       - save_cache:
           paths:
             - ./vendor
-          key: v1-dependencies-{{ checksum "bbs-app/composer.json" }}
+          key: v1-dependencies-{{ checksum "./bbs-app/composer.json" }}
   wait-for-mysql:
     steps:
       - run:
@@ -57,44 +57,44 @@ commands:
     steps:
       - run:
           name: Migration & Seeding
-          working_directory: laravel
+          working_directory: ~/bbs-app
           command: php artisan migrate --seed
   test-static-code-analysis:
     steps:
       - run:
           name: Coding rules check
-          working_directory: laravel
+          working_directory: ~/bbs-app
           command: ./vendor/bin/phpcs --standard=phpcs.xml ./
 
       - run:
           name: Static code analysis
-          working_directory: laravel
+          working_directory: ~/bbs-app
           command: php artisan code:analyse --paths='app,tests' --level=max
   test-unittest:
     steps:
       - run:
           name: Unittest
-          working_directory: laravel
-          command: ./vendor/bin/phpunit
+          working_directory: ~/bbs-app
+          command: ./bbs-app/vendor/bin/phpunit --configuration=./bbs-app/phpunit.xml
   test-e2etest:
     steps:
       - run:
           name: Install Chrome Driver
-          working_directory: laravel
+          working_directory: ~/bbs-app
           command: php artisan dusk:chrome-driver 76
       - run:
           name: Start Chrome Driver
-          working_directory: laravel
+          working_directory: ~/bbs-app
           command: ./vendor/laravel/dusk/bin/chromedriver-linux
           background: true
       - run:
           name: Start Laravel Server
-          working_directory: laravel
+          working_directory: ~/bbs-app
           command: php artisan serve
           background: true
       - run:
           name: Run Dusk
-          working_directory: laravel
+          working_directory: ~/bbs-app
           command: php artisan dusk
           environment:
             APP_URL: http://localhost:8000
@@ -110,7 +110,7 @@ jobs:
       - save-cache-composer
       - run:
           name: npm install
-          working_directory: laravel
+          working_directory: ~/bbs-app
           command: npm install
   test:
     executor:
