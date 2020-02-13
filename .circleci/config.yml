@@ -13,12 +13,12 @@ jobs:
       - run: sudo composer self-update
       - restore_cache:
           keys:
-            - composer-v1-{{ checksum "bbs-app/composer.json" }}
+            - composer-v1-{{ checksum "/home/circleci/bbs-app/composer.json" }}
             - composer-v1-
       - run: pwd
-      - run: composer install -n --prefer-dist
+      - run: composer install -n --prefer-dist --working-dir=/home/circleci/bbs-app
       - save_cache:
-          key: composer-v1-{{ checksum "bbs-app/composer.json" }}
+          key: composer-v1-{{ checksum "/home/circleci/bbs-app/composer.json" }}
           paths:
             - vendor
       - run: php artisan migrate
@@ -27,11 +27,11 @@ jobs:
 
       - restore_cache:
           keys:
-            - node-v1-{{ checksum "bbs-app/package-lock.json" }}
+            - node-v1-{{ checksum "/home/circleci/bbs-app/package-lock.json" }}
             - node-v1-
       - run: yarn install
       - save_cache:
-          key: node-v1-{{ checksum "bbs-app/package-lock.json" }}
+          key: node-v1-{{ checksum "/home/circleci/bbs-app/package-lock.json" }}
           paths:
             - node_modules
       - run: touch storage/testing.sqlite
