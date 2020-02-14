@@ -1,0 +1,7 @@
+version: 2
+jobs:
+  build:
+    - image: circleci/php:7.2-node-browsers
+    steps:
+      - checkout
+      - run: echo "A first hello"
