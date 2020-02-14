@@ -2,27 +2,30 @@ version: 2
 jobs:
   one:
     docker:
-      - image: circleci/php:7.2-node-browsers
+      - image: circleci/ruby:2.4.1
     steps:
       - checkout
       - run: echo "A first hello"
-      - run: mkdir -p workspace
-      - run: echo "Trying out workspaces" > workspace/output
+      - run: mkdir -p my_workspace
+      - run: echo "Trying out workspaces" > my_workspace/echo-output
       - persist_to_workspace:
-        root: workspace
-        paths:
-          - output
+          # 絶対パス、または working_directory からの相対パスにする必要があります
+          root: my_workspace
+          # root からの相対パスにする必要があります
+          paths:
+            - echo-output      
   two:
     docker:
-      - image: circleci/php:7.2-node-browsers
+      - image: circleci/ruby:2.4.1
     steps:
       - checkout
-      - run: echo "A more familiar hi"
+      - run: echo "A more familiar hi"  
       - attach_workspace:
-        at: workspace
-        
+          # 絶対パス、または working_directory からの相対パスにする必要があります
+          at: my_workspace
+
       - run: |
-          if [[$(cat workspace/output) == "Trying out workspaces" ]]; then
+          if [[ $(cat my_workspace/echo-output) == "Trying out workspaces" ]]; then
             echo "It worked!";
           else
             echo "Nope!"; exit 1
