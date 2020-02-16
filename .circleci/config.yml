@@ -31,5 +31,5 @@ jobs:
             - node_modules
       - run: touch bbs-app/storage/testing.sqlite
       - run: php bbs-app/artisan migrate --env=testing --database=sqlite_testing --force
-      - run: ./vendor/bin/codecept build
-      - run: ./vendor/bin/codecept run
+      - run: bbs-app/vendor/bin/codecept build
+      - run: bbs-app/vendor/bin/codecept run
