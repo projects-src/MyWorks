@@ -8,8 +8,9 @@ jobs:
     working_directory: ~/bbs-app
     steps:
       - checkout
-      - run: sudo apt install -y libsqlite3-dev zlib1g-dev
+      - run: sudo apt update && sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
+      - run: sudo docker-php-ext-install bcmath && sudo docker-php-ext-enable bcmath
       - run: sudo composer self-update
       - restore_cache:
           keys:
@@ -31,12 +32,6 @@ jobs:
             - node_modules
       - run: touch bbs-app/storage/testing.sqlite
       - run: php bbs-app/artisan migrate --env=testing --database=sqlite_testing --force
-      #- run: php bbs-app/artisan migrate
-      #- run: php bbs-app/artisan db:seed
+      - run: php bbs-app/artisan migrate
+      - run: php bbs-app/artisan db:seed
       - run: php bbs-app/vendor/bin/phpunit
-#       - run: php bbs-app/vendor/codeception/codeception/codecept build
-#       - run: php bbs-app/vendor/codeception/codeception/codecept run
-#       - store_test_results:
-#           path: tests/_output
-#       - store_artifacts:
-#           path: tests/_output
