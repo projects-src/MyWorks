@@ -32,7 +32,7 @@ jobs:
       - run: touch bbs-app/storage/testing.sqlite
       - run: php bbs-app/artisan migrate --env=testing --database=sqlite_testing --force
       - run: bbs-app/vendor/bin/codecept build
-      - run: bbs-app/vendor/bin/codecept run --xml result.xml
+      - run: bbs-app/vendor/bin/codecept run
       - store_test_results:
           path: tests/_output
       - store_artifacts:
