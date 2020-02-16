@@ -34,6 +34,6 @@ jobs:
       - run: bbs-app/vendor/bin/codecept build
       - run: bbs-app/vendor/bin/codecept run --xml result.xml
       - store_test_results:
-          path: tests/output
+          path: tests/_output
       - store_artifacts:
-          path: tests/output
+          path: tests/_output
