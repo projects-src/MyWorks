@@ -34,4 +34,15 @@ jobs:
       - run: php bbs-app/artisan migrate --env=testing --database=sqlite_testing --force
       #- run: php bbs-app/artisan migrate
       #- run: php bbs-app/artisan db:seed
-      #- run: php bbs-app/vendor/bin/phpunit
+      - run: 
+          name: Unittest
+          working_directory: ~/bbs-app
+          command: php bbs-app/vendor/bin/phpunit
+      - run:
+          name: Coding rules check
+          working_directory: ~/bbs-app
+          command: bbs-app/bin/phpcs --standard=phpcs.xml ./
+      - run:
+          name: Static code analysis
+          working_directory: ~/bbs-app
+          command: php bbs-app/artisan code:analyse --paths='app,tests' --level=max
