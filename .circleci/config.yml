@@ -34,10 +34,10 @@ jobs:
       - run: php bbs-app/artisan migrate --env=testing --database=sqlite_testing --force
       #- run: php bbs-app/artisan migrate
       #- run: php bbs-app/artisan db:seed
-      - run: 
-          name: Unittest
-          working_directory: ~/bbs-app
-          command: php bbs-app/vendor/bin/phpunit
+#       - run: 
+#           name: Unittest
+#           working_directory: ~/bbs-app
+#           command: php bbs-app/vendor/bin/phpunit
       - run:
           name: Coding rules check
           working_directory: ~/bbs-app
