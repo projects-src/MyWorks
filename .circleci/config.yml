@@ -8,8 +8,9 @@ jobs:
     working_directory: ~/bbs-app
     steps:
       - checkout
-      - run: sudo apt install -y libsqlite3-dev zlib1g-dev
+      - run: sudo apt update && sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
+      - run: sudo docker-php-ext-install bcmath && sudo docker-php-ext-enable bcmath
       - run: sudo composer self-update
       - restore_cache:
           keys:
@@ -31,9 +32,17 @@ jobs:
             - node_modules
       - run: touch bbs-app/storage/testing.sqlite
       - run: php bbs-app/artisan migrate --env=testing --database=sqlite_testing --force
-      - run: bbs-app/vendor/bin/codecept build
-      - run: bbs-app/vendor/bin/codecept run --xml result.xml
-      - store_test_results:
-          path: tests/output
-      - store_artifacts:
-          path: tests/output
+      #- run: php bbs-app/artisan migrate
+      #- run: php bbs-app/artisan db:seed
+#       - run: 
+#           name: Unittest
+#           working_directory: ~/bbs-app
+#           command: php bbs-app/vendor/bin/phpunit
+      - run:
+          name: Coding rules check
+          working_directory: ~/bbs-app
+          command: bbs-app/vendor/bin/phpcs --standard=phpcs.xml ./
+      - run:
+          name: Static code analysis
+          working_directory: ~/bbs-app
+          command: php bbs-app/artisan code:analyse --paths='app,tests' --level=max
