@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Coding rules check
           working_directory: ~/bbs-app
-          command: bbs-app/bin/phpcs --standard=phpcs.xml ./
+          command: bbs-app/vendor/bin/phpcs --standard=phpcs.xml ./
       - run:
           name: Static code analysis
           working_directory: ~/bbs-app
