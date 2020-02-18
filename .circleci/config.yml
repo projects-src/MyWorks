@@ -42,5 +42,7 @@ jobs:
           working_directory: bbs-app
           command: ./vendor/bin/phpcs --standard=phpcs.xml ./
       - run:
-          name: Static code analysis
-          command: php bbs-app/artisan code:analyse --paths='app,tests' --level=max
+          name: RUN Larastan
+          working_directory: bbs-app
+          command: ./vendor/bin/phpstan analyse
+          
