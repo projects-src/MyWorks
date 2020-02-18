@@ -39,6 +39,7 @@ jobs:
           #command: php /vendor/bin/phpunit 
       - run:
           name: Coding rules check
+          working_directory: bbs-app
           command: ./vendor/bin/phpcs --standard=phpcs.xml ./
       - run:
           name: Static code analysis
