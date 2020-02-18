@@ -34,7 +34,7 @@ jobs:
       - run: php bbs-app/artisan migrate --env=testing --database=sqlite_testing --force
       #- run: php bbs-app/artisan migrate
       #- run: php bbs-app/artisan db:seed
-      - run: php bbs-app/vendor/bin/phpunit 
+      #- run: php bbs-app/vendor/bin/phpunit 
           #name: Unittes
           #command: php /vendor/bin/phpunit 
       - run:
