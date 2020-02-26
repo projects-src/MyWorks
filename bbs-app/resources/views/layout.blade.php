@@ -11,11 +11,27 @@
     >
 </head>
 <body>
-    <header class="navbar navbar-dark bg-dark">
+    <header class="navbar navbar-light" style="background-color: #e3f2fd;">
         <div class="container">
             <a class="navbar-brand" href="{{url('')}}">
                 BBS
             </a>
+            <form class="form-inline my-2 my-lg-0 ml-auto">
+                <!-- <input class="form-control mr-sm-2" type="text" placeholder="検索" aria-label="検索"> -->
+                <input type="text" name="keyword" value="{{$keyword ?? ''}}" class="form-control mr-sm-2" placeholder="検索" aria-label="検索">
+                <button type="submit" class="btn btn-outline-success my-2 my-sm-0">検索</button>
+            </form>
+        </div>
+        <div class="container">
+            @if(count($posts) > 0)
+                <div class="row">
+                    @foreach($posts as $post)
+                        <div class="col-md-3">
+                            {{ $post->name }}
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </header>
     

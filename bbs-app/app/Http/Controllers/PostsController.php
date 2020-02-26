@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use Auth;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', array('except' => 'index'));
+    }
+
     public function index()
     {
         $posts = Post::with(['comments'])->orderBy('created_at', 'desc')->paginate(10);
@@ -34,7 +40,6 @@ class PostsController extends Controller
     public function show($post_id)
     {
         $post = Post::findOrFail($post_id);
-    
         return view('posts.show', [
             'post' => $post,
         ]);

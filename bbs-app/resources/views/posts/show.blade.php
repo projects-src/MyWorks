@@ -4,7 +4,7 @@
     <div class="container mt-4">
         <div class="border p-4">
             <div class="mb-4 text-right">
-                <a class="btn btn-primary" href="{{ route('posts.edit', ['post' => $post]) }}">
+                <a class="btn btn-success" href="{{ route('posts.edit', ['post' => $post]) }}">
                     編集する
                 </a>
                 <form

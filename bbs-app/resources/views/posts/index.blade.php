@@ -14,7 +14,7 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">
-                        {!! nl2br(e(str_limit($post->body, 20))) !!}
+                        {!! nl2br(e(str_limit($post->body, 100))) !!}
                     </p>
 
                     <a class="card-link" href="{{ route('posts.show', ['post' => $post])}}">
