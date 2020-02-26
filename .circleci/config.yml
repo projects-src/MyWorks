@@ -33,13 +33,16 @@ jobs:
       - run: touch bbs-app/storage/testing.sqlite
       - run: php bbs-app/artisan migrate --env=testing --database=sqlite_testing --force
       #- run: php bbs-app/artisan migrate
-      #- run: php bbs-app/artisan db:seed
-      #- run: php bbs-app/vendor/bin/phpunit 
-          #name: Unittes
-          #command: php /vendor/bin/phpunit 
+      #- run: php bbs-app/artisan db:seed 
       - run:
           name: Coding rules check
+          working_directory: bbs-app
           command: ./vendor/bin/phpcs --standard=phpcs.xml ./
+          command: ./vendor/bin/phpcbf --standard = PSR2 ./src
       - run:
-          name: Static code analysis
-          command: php bbs-app/artisan code:analyse --paths='app,tests' --level=max
+          name: RUN Larastan
+          working_directory: bbs-app
+          command: ./vendor/bin/phpstan analyse
+      - run: php bbs-app/vendor/bin/phpunit 
+          name: Unittes
+          command: php /vendor/bin/phpunit 
