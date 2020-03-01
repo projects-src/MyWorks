@@ -43,6 +43,6 @@ jobs:
           name: RUN Larastan
           working_directory: bbs-app
           command: ./vendor/bin/phpstan analyse
-      - run: php bbs-app/vendor/bin/phpunit 
-          name: Unittes
-          command: php /vendor/bin/phpunit 
+#       - run: php bbs-app/vendor/bin/phpunit 
+#           name: Unittest
+#           command: php /vendor/bin/phpunit 
